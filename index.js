@@ -4,7 +4,7 @@ import  Redis from 'ioredis';
 import { parse, stringify, toJSON, fromJSON } from "flatted";
 
 const app = express();
-const redis = new Redis(6379, "localhost");
+const redis = new Redis({ port: 6379, host: "10.233.4.168", password: "pcexpass" });
 
 
 
@@ -27,6 +27,8 @@ app.get("/", async function (req, res) {
 
     latestNum = list.append(list.tail.value + 1); 
 
+  console.log(`${Date.now()} \t provided \t exchangeId=${latestNum}`);
+
 
     await redis.set("latestNum", latestNum)
 
@@ -35,4 +37,4 @@ app.get("/", async function (req, res) {
   res.status(200).json(latestNum);
 });
 
-app.listen(5000, console.log('Server running on port 5000...'));
+app.listen(2020, console.log('Server running on port 2020...'));
